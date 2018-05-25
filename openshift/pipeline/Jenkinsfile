@@ -36,8 +36,8 @@ node('nodejs') {
         sh 'npm install -g @angular/cli'
         sh 'npm install --verbose -d'
         sh 'npm install --save classlist.js'
-        sh '$(npm bin)/ng lint'
-        sh '$(npm bin)/ng build --prod --build-optimizer'
+        sh 'ng lint'
+        sh 'ng build --prod --build-optimizer'
         sh 'rm -rf node_modules'
         sh "oc start-build ${app} --from-dir=. --follow"
       }
