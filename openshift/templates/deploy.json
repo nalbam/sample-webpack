@@ -14,7 +14,7 @@
     "template": "sample-angular",
     "xpaas": "1.0.0"
   },
-  "message": "A new nodejs application has been created in your project.",
+  "message": "A new angular application has been created in your project.",
   "parameters": [
     {
       "name": "APPLICATION_NAME",

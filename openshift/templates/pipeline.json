@@ -82,13 +82,6 @@
       "required": false
     },
     {
-      "name": "NODEJS_VERSION",
-      "displayName": "Version of NodeJS Image",
-      "description": "Version of NodeJS image to be used (6, 8, or latest).",
-      "value": "8",
-      "required": true
-    },
-    {
       "name": "NPM_MIRROR",
       "displayName": "Custom NPM Mirror URL",
       "description": "The custom NPM mirror URL",
@@ -133,8 +126,8 @@
           "sourceStrategy": {
             "from": {
               "kind": "ImageStreamTag",
-              "namespace": "openshift",
-              "name": "nodejs:${NODEJS_VERSION}"
+              "namespace": "ops",
+              "name": "angular:latest"
             },
             "env": [
               {
@@ -203,8 +196,8 @@
                 "value": "${SLACK_WEBHOOK_URL}"
               },
               {
-                "name": "NODEJS_VERSION",
-                "value": "${NODEJS_VERSION}"
+                "name": "NPM_MIRROR",
+                "value": "${NPM_MIRROR}"
               }
             ]
           }
