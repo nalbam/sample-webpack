@@ -1,27 +1,50 @@
-# SampleAngular
+# sample-angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.5.
+## Openshift
 
-## Development server
+### Create Project
+```bash
+oc new-project ops
+oc new-project dev
+oc new-project qa
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+oc policy add-role-to-user admin admin -n ops
+oc policy add-role-to-user admin admin -n dev
+oc policy add-role-to-user admin admin -n qa
+```
 
-## Code scaffolding
+### Create Catalog
+```bash
+oc create -f https://raw.githubusercontent.com/nalbam/sample-angular/master/openshift/templates/deploy.json -n ops
+oc create -f https://raw.githubusercontent.com/nalbam/sample-angular/master/openshift/templates/pipeline.json -n ops
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Create Application
+```bash
+oc new-app -f https://raw.githubusercontent.com/nalbam/sample-angular/master/openshift/templates/deploy.json -n dev
+oc new-app -f https://raw.githubusercontent.com/nalbam/sample-angular/master/openshift/templates/deploy.json -n qa
+```
 
-## Build
+### Create Pipeline
+```bash
+oc new-app jenkins-ephemeral -n ops
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+oc policy add-role-to-user edit system:serviceaccount:ops:jenkins -n dev
+oc policy add-role-to-user edit system:serviceaccount:ops:jenkins -n qa
 
-## Running unit tests
+oc new-app -f https://raw.githubusercontent.com/nalbam/sample-angular/master/openshift/templates/pipeline.json \
+           -p SOURCE_REPOSITORY_URL=https://github.com/nalbam/sample-angular \
+           -p JENKINS_URL=https://jenkins-ops.apps.nalbam.com \
+           -p SLACK_WEBHOOK_URL=https://hooks.slack.com/services/web/hook/token \
+           -n ops
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Start Build
+```bash
+oc start-build sample-angular-pipeline -n ops
+```
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Cleanup
+```bash
+oc delete project ops dev qa
+```
