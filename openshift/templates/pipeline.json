@@ -128,13 +128,7 @@
               "kind": "ImageStreamTag",
               "namespace": "ops",
               "name": "angular:latest"
-            },
-            "env": [
-              {
-                "name": "NPM_MIRROR",
-                "value": "${NPM_MIRROR}"
-              }
-            ]
+            }
           }
         },
         "output": {
@@ -194,10 +188,6 @@
               {
                 "name": "SLACK_WEBHOOK_URL",
                 "value": "${SLACK_WEBHOOK_URL}"
-              },
-              {
-                "name": "NPM_MIRROR",
-                "value": "${NPM_MIRROR}"
               }
             ]
           }

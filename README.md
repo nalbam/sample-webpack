@@ -34,6 +34,7 @@ oc policy add-role-to-user edit system:serviceaccount:ops:jenkins -n qa
 
 oc new-app -f https://raw.githubusercontent.com/nalbam/sample-angular/master/openshift/templates/pipeline.json \
            -p SOURCE_REPOSITORY_URL=https://github.com/nalbam/sample-angular \
+           -p SOURCE_REPOSITORY_SECRET=nalbam-secret \
            -p JENKINS_URL=https://jenkins-ops.apps.nalbam.com \
            -p SLACK_WEBHOOK_URL=https://hooks.slack.com/services/web/hook/token \
            -n ops
