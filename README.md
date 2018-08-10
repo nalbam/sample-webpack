@@ -1,1 +1,1 @@
-# sample-angular
+# sample-webpack
