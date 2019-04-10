@@ -1,6 +1,6 @@
 {
   "name": "sample-webpack",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Webpack sample app",
   "main": "webpack.config.js",
   "scripts": {
@@ -21,14 +21,5 @@
     "style-loader": "^0.23.1",
     "webpack": "^1.13.2",
     "webpack-dev-server": ">=3.1.11"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/nalbam/sample-webpack.git"
-  },
-  "author": "Jungyoul Yu <me@nalbam.com>",
-  "homepage": "http://github.com/nalbam/sample-webpack",
-  "bugs": {
-    "url": "http://github.com/nalbam/sample-webpack/issues"
   }
 }
