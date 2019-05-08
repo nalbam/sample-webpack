@@ -78,14 +78,12 @@ _package() {
     MAJOR=$(cat ${SHELL_DIR}/VERSION | xargs | cut -d'.' -f1)
     MINOR=$(cat ${SHELL_DIR}/VERSION | xargs | cut -d'.' -f2)
 
-    SIMILAR="${MAJOR}.${MINOR}."
-
     # latest versions
     GITHUB="https://api.github.com/repos/${USERNAME}/${REPONAME}/releases"
-    VERSION=$(curl -s ${GITHUB} | grep "tag_name" | grep "${SIMILAR}" | sort -r | head -1 | cut -d'"' -f4 | xargs)
+    VERSION=$(curl -s ${GITHUB} | grep "tag_name" | grep "${MAJOR}.${MINOR}." | sort -r | head -1 | cut -d'"' -f4 | xargs)
 
     if [ -z ${VERSION} ]; then
-        VERSION="v0.0.0"
+        VERSION="${MAJOR}.${MINOR}.0"
     fi
 
     # new version
@@ -93,17 +91,23 @@ _package() {
         VERSION=$(echo ${VERSION} | perl -pe 's/^(([v\d]+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
         printf "${VERSION}" > ${SHELL_DIR}/target/VERSION
     else
-        if [ "${PR_NUM}" != "" ]; then
-            # if [ "${PR_URL}" != "" ]; then
-            #     PR_NUM=$(echo $PR_URL | cut -d'/' -f7)
-            # else
-            #     PR_NUM=${CIRCLE_BUILD_NUM}
-            # fi
+        PR=$(echo "${BRANCH}" | cut -d'/' -f1)
 
-            printf "${PR_NUM}" > ${SHELL_DIR}/target/PR
+        if [ "${PR}" == "pull" ]; then
+            printf "${PR}" > ${SHELL_DIR}/target/PR
 
-            VERSION="${VERSION}-${PR_NUM}"
-            printf "${VERSION}" > ${SHELL_DIR}/target/VERSION
+            if [ "${PR_NUM}" == "" ]; then
+                if [ "${PR_URL}" != "" ]; then
+                    PR_NUM=$(echo $PR_URL | cut -d'/' -f7)
+                elif [ "${CIRCLE_BUILD_NUM}" != "" ]; then
+                    PR_NUM=${CIRCLE_BUILD_NUM}
+                fi
+            fi
+
+            if [ "${PR_NUM}" != "" ]; then
+                VERSION="${VERSION}-${PR_NUM}"
+                printf "${VERSION}" > ${SHELL_DIR}/target/VERSION
+            fi
         fi
     fi
 
