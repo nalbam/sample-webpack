@@ -93,18 +93,18 @@ _package() {
         VERSION=$(echo ${VERSION} | perl -pe 's/^(([v\d]+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
         printf "${VERSION}" > ${SHELL_DIR}/target/VERSION
     else
-        if [ "${PR_NUM}" == "" ]; then
-            if [ "${PR_URL}" != "" ]; then
-                PR_NUM=$(echo $PR_URL | cut -d'/' -f7)
-            else
-                PR_NUM=${CIRCLE_BUILD_NUM}
-            fi
+        if [ "${PR_NUM}" != "" ]; then
+            # if [ "${PR_URL}" != "" ]; then
+            #     PR_NUM=$(echo $PR_URL | cut -d'/' -f7)
+            # else
+            #     PR_NUM=${CIRCLE_BUILD_NUM}
+            # fi
+
+            printf "${PR_NUM}" > ${SHELL_DIR}/target/PR
+
+            VERSION="${VERSION}-${PR_NUM}"
+            printf "${VERSION}" > ${SHELL_DIR}/target/VERSION
         fi
-
-        printf "${PR_NUM}" > ${SHELL_DIR}/target/PRE
-
-        VERSION="${VERSION}-${PR_NUM}"
-        printf "${VERSION}" > ${SHELL_DIR}/target/VERSION
     fi
 
     _result "VERSION=${VERSION}"
@@ -121,9 +121,9 @@ _release() {
     VERSION=$(cat ${SHELL_DIR}/target/VERSION | xargs)
     _result "VERSION=${VERSION}"
 
-    echo "${VERSION}" > ${SHELL_DIR}/target/dist/${VERSION}
+    printf "${VERSION}" > ${SHELL_DIR}/target/dist/${VERSION}
 
-    if [ -f ${SHELL_DIR}/target/PRE ]; then
+    if [ -f ${SHELL_DIR}/target/PR ]; then
         GHR_PARAM="-delete -prerelease"
     else
         GHR_PARAM="-delete"
@@ -174,3 +174,5 @@ case ${CMD} in
         _slack
         ;;
 esac
+
+_success
