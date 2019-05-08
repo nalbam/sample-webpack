@@ -108,6 +108,8 @@ _package() {
                 VERSION="${VERSION}-${PR_NUM}"
                 printf "${VERSION}" > ${SHELL_DIR}/target/VERSION
             fi
+        else
+            VERSION=
         fi
     fi
 
