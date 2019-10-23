@@ -1,6 +1,6 @@
 {
   "name": "sample-webpack",
-  "version": "v0.0.1",
+  "version": "v0.2.0",
   "description": "Webpack sample app",
   "main": "webpack.config.js",
   "scripts": {
