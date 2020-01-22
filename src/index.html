@@ -1,10 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Sample Webpack v0.1</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+  <title>Hello, world!</title>
 </head>
+
 <body>
-  <div id="app"></div>
+
+  <main role="main">
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1><img src="webpack.png"></h1>
+        <p>
+          <button class="btn btn-primary btn-thumbs-up"><i class="far fa-thumbs-up"></i> <span
+              id="thumbs-up-count">0</span></button>
+          <button class="btn btn-danger btn-thumbs-down"><i class="far fa-thumbs-down"></i> <span
+              id="thumbs-down-count">0</span></button>
+        </p>
+        <p id="drop-rate"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="/counter.js"></script>
+  <script src="/dropper.js"></script>
+
 </body>
+
 </html>

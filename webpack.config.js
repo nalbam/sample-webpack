@@ -1,42 +1,48 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: __dirname + '/src/index.html',
-  filename: 'index.html',
-  inject: 'body'
-});
-
-var ExtractTextPluginConfig = new ExtractTextPlugin('style.css');
-
-var entrypoint = process.env.npm_lifecycle_event === 'dev' ?
-  'webpack-dev-server/client?http://localhost:8080' :
-  './src/index.js';
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
-  entry: entrypoint,
+  mode: 'development',
+  entry: './src/app.js',
   output: {
-    path: __dirname + '/dist',
-    filename: 'bundle.js'
+    filename: '[name].bundle.js?[hash]',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
-    loaders: [{
-        test: /\.js$/,
-        include: __dirname + '/src',
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'stage-0']
-        }
+    rules: [{
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /\.scss$/,
-        include: __dirname + '/src',
-        loader: ExtractTextPlugin.extract('css!sass')
+        test: /\.(png|svg|jpg|gif|ico)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            name: '[name].[ext]?[hash]',
+            limit: 10000 // 10kb
+          }
+        }
       }
     ]
   },
+  devServer: {
+    contentBase: './dist',
+    overlay: true,
+    hot: true
+  },
   plugins: [
-    HtmlWebpackPluginConfig,
-    ExtractTextPluginConfig
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: __dirname + '/src/index.html',
+      filename: 'index.html',
+      inject: 'body'
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].bundle.css?[hash]',
+      chunkFilename: '[id].css',
+    }),
   ]
-}
+};
