@@ -20,8 +20,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
-      {
+    loaders: [{
         test: /\.js$/,
         include: __dirname + '/src',
         loader: 'babel-loader',
@@ -36,5 +35,8 @@ module.exports = {
       }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig, ExtractTextPluginConfig]
+  plugins: [
+    HtmlWebpackPluginConfig,
+    ExtractTextPluginConfig
+  ]
 }
