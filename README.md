@@ -5,16 +5,10 @@
 
 <!-- [![CircleCI](https://circleci.com/gh/nalbam/sample-webpack.svg?style=svg)](https://circleci.com/gh/nalbam/sample-webpack) -->
 
-[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/nalbam/sample-webpack?label=Docker%20Hub&style=for-the-badge&logo=docker)](https://hub.docker.com/r/nalbam/sample-webpack)
-[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/nalbam/sample-webpack?style=for-the-badge&logo=docker)](https://hub.docker.com/r/nalbam/sample-webpack)
-[![Docker Pulls](https://img.shields.io/docker/pulls/nalbam/sample-webpack?style=for-the-badge&logo=docker)](https://hub.docker.com/r/nalbam/sample-webpack)
-
-<!-- [![DockerHub Badge](http://dockeri.co/image/nalbam/sample-webpack)](https://hub.docker.com/r/nalbam/sample-webpack/) -->
-
 ## Docker
 
 ```bash
-docker pull nalbam/sample-webpack
+docker pull ghcr.io/nalbam/sample-webpack
 ```
 
 ## Requirements
@@ -44,4 +38,4 @@ docker run -d -p 3000:80 sample-webpack
 
 ## CI
 
-`.github/workflows/push.yaml` runs the build and a Docker image build with a start check on pull requests and on pushes to `main`/`master`. Version bump, release, GitOps dispatch and image push run only on pushes.
+`.github/workflows/push.yaml` runs the build and a Docker image build with a start check on pull requests and on pushes to `main`/`master`. Version bump, release, GitOps dispatch and image push run only on pushes. The image is published to GHCR (`ghcr.io/nalbam/sample-webpack`).
