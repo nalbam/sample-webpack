@@ -75,6 +75,9 @@ get_version() {
 }
 
 npm_build() {
+    _command "npm ci"
+    npm ci
+
     _command "npm run build"
     npm run build
 }
