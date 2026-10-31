@@ -5,17 +5,25 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node
+      - image: cimg/node:26.13
     working_directory: ~/works
     steps:
       - checkout
       - run:
-          name: Build
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Build dist
           command: |
-            mkdir target
-            curl -sLo target/builder.sh toast.sh/builder
-            bash ./target/builder.sh
             npm run build
+            test -s dist/index.html
+            test -s dist/webpack.png
+      # The publish job runs target/builder.sh from the shared workspace.
+      - run:
+          name: Fetch builder for publish
+          command: |
+            mkdir -p target
+            curl -sLo target/builder.sh toast.sh/builder
       - persist_to_workspace:
           root: ~/works
           paths:

@@ -1,21 +1,37 @@
 # gitlab-ci
 
-image: docker:stable
-
-services:
-  - docker:dind
+stages:
+  - build
+  - docker
 
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
 
-stages:
-  - build
-
-before_script:
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-
-build:
+# Install the locked dependencies and build dist/ for the Dockerfile.
+dist:
   stage: build
+  image: node:26.13-alpine
   script:
-    - docker build -f Dockerfile-alpine -t $IMAGE_TAG .
+    - npm ci
+    - npm run build
+    - test -s dist/index.html
+    - test -s dist/webpack.png
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 day
+
+docker:
+  stage: docker
+  image: docker:29
+  services:
+    - docker:29-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  needs:
+    - dist
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker build --pull -f Dockerfile -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
