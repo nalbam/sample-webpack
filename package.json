@@ -12,14 +12,15 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "clean": "rm -rf dist node_modules",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "test": "bash test/build-sh.test.sh"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^14.0.0",
     "html-webpack-plugin": "^5.6.8",
     "mini-css-extract-plugin": "^2.10.2",
     "webpack": "^5.112.2",
-    "webpack-cli": "^7.2.3",
+    "webpack-cli": "^7.3.1",
     "webpack-dev-server": "^6.1.0"
   }
 }

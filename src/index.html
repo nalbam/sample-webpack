@@ -3,22 +3,23 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v7.3.1/css/all.css">
   <title>Hello, world!</title>
 </head>
 
 <body>
 
-  <main role="main">
-    <section class="jumbotron text-center">
+  <main>
+    <section class="p-5 mb-4 bg-body-tertiary text-center">
       <div class="container">
-        <h1><img src="webpack.png"></h1>
+        <h1><img src="webpack.png" alt="webpack"></h1>
         <p>
-          <button class="btn btn-primary btn-thumbs-up"><i class="far fa-thumbs-up"></i> <span
+          <button type="button" class="btn btn-primary btn-thumbs-up"><i class="fa-regular fa-thumbs-up"></i> <span
               id="thumbs-up-count">0</span></button>
-          <button class="btn btn-danger btn-thumbs-down"><i class="far fa-thumbs-down"></i> <span
+          <button type="button" class="btn btn-danger btn-thumbs-down"><i class="fa-regular fa-thumbs-down"></i> <span
               id="thumbs-down-count">0</span></button>
         </p>
         <p id="drop-rate"></p>
@@ -26,8 +27,10 @@
     </section>
   </main>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-4.0.0.min.js"
+    integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <script src="/counter.js"></script>
   <script src="/dropper.js"></script>
 

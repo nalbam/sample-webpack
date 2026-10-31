@@ -76,10 +76,10 @@ get_version() {
 
 npm_build() {
     _command "npm ci"
-    npm ci
+    npm ci || _error "npm ci failed"
 
     _command "npm run build"
-    npm run build
+    npm run build || _error "npm run build failed"
 }
 
 npm_start() {
