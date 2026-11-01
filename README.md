@@ -46,6 +46,22 @@ Then open `http://localhost:3000/`. The page loads Bootstrap 5.3.8, jQuery 4.0.0
 
 Known limitation: `index.html` loads `/counter.js` and `/dropper.js`, but this repository does not contain them. They return 404 and the counters stay at 0.
 
+## Dependency PR review
+
+[docs/open-pr-review.md](docs/open-pr-review.md) records the review of the open Dependabot PRs #61, #64, #66, #67, and #70. `main` already has the same or a later version of each package, so each PR can be closed without merging.
+
+To check again, list the open PRs and compare the installed versions with `package-lock.json`. If the `gh` query fails, record the failure, not an empty list.
+
+```bash
+gh api --paginate 'repos/nalbam/sample-webpack/pulls?state=open&per_page=100' \
+  --jq '.[] | [.number, .title, .base.sha] | @tsv'
+
+npm ci
+npm ls webpack-cli copy-webpack-plugin css-loader webpack-dev-server style-loader --depth=0
+```
+
+The review document lists the full procedure and the expected versions.
+
 ## CI
 
 `.github/workflows/push.yaml` (check name `build`) runs on pull requests and pushes to `main`/`master`, and is reused by the release workflow. On Node.js 26 it runs these steps. A failed step fails the job.
