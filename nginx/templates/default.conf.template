@@ -1,0 +1,20 @@
+# Rendered to /etc/nginx/conf.d/default.conf by the nginx image entrypoint.
+# Only ${PORT} and ${VERSION} are substituted (NGINX_ENVSUBST_FILTER).
+
+server {
+    listen ${PORT};
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location = /health {
+        access_log off;
+        default_type application/json;
+        return 200 '{"result":"ok","version":"${VERSION}"}\n';
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
