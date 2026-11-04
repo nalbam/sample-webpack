@@ -14,7 +14,7 @@ RUN npm run build && npm test && cp -R dist /out
 FROM scratch AS artifact
 COPY --from=build /out /
 
-FROM nginx:1.30-alpine
+FROM nginx:1.31-alpine
 
 LABEL org.opencontainers.image.title="sample-webpack" \
       org.opencontainers.image.description="A sample webpack site on Nginx" \
